@@ -30,7 +30,7 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
 parser.add_argument('--data_path',
-                    default='/home/elliot/data/pytorch/svhn/',
+                    default='/content/',
                     type=str,
                     help='Path to dataset')
 parser.add_argument(

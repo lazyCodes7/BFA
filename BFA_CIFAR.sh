@@ -24,7 +24,6 @@ enable_tb_display=false # enable tensorboard display
 model=resnet50_quan
 dataset=cifar10
 test_batch_size=128
-data_path = '/content/'
 label_info=BFA_defense_test
 
 attack_sample_size=128 # number of data used for BFA
