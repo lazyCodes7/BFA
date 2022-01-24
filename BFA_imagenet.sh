@@ -21,7 +21,7 @@ fi
 
 ############### Configurations ########################
 enable_tb_display=false # enable tensorboard display
-model=resnet18_quan
+model=resnet50_quan
 dataset=imagenet
 test_batch_size=256
 

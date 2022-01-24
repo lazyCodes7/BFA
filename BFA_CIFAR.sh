@@ -21,7 +21,7 @@ fi
 
 ############### Configurations ########################
 enable_tb_display=false # enable tensorboard display
-model=resnet20_quan
+model=resnet50_quan
 dataset=cifar10
 test_batch_size=128
 
@@ -35,7 +35,7 @@ save_path=./save/${DATE}/${dataset}_${model}_${label_info}
 tb_path=${save_path}/tb_log  #tensorboard log path
 
 # set the pretrained model path
-pretrained_model=/home/elliot/Documents/CVPR_2020/BFA_defense_camera_ready/BFA/save/2020-05-08/cifar10_resnet20_quan_160_SGD_binarized/model_best.pth.tar
+pretrained_model=https://github.com/iamsh4shank/BFA_ViT/blob/main/cifar-10_models/cifar_resnet50.pt
 
 ############### Neural network ############################
 COUNTER=0
