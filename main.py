@@ -38,6 +38,13 @@ parser.add_argument(
     type=str,
     choices=['cifar10', 'cifar100', 'imagenet', 'svhn', 'stl10', 'mnist'],
     help='Choose between Cifar10/100 and ImageNet.')
+
+'''parser.add_argument('--arch',
+                    metavar='ARCH',
+                    default='lbcnn',
+                    choices=model_names,
+                    help='model architecture: ' + ' | '.join(model_names) +
+                    ' (default: resnext29_8_64)')'''
 parser.add_argument('--epochs',
                     type=int,
                     default=200,

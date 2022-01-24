@@ -42,7 +42,6 @@ COUNTER=0
 while [ $COUNTER -lt 1 ]; do
     $PYTHON main.py --dataset ${dataset} \
         --data_path ${data_path}   \
-        --arch ${model} --save_path ${save_path}  \
         --test_batch_size ${test_batch_size} --workers 8 --ngpu 1 --gpu_id 1 \
         --print_freq 50 \
         --evaluate --resume ${pretrained_model} --fine_tune\

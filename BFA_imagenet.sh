@@ -37,7 +37,6 @@ tb_path=${save_path}/tb_log  #tensorboard log path
 {
 $PYTHON main.py --dataset ${dataset} \
     --data_path ${data_path}   \
-    --arch ${model} --save_path ${save_path}  \
     --test_batch_size ${test_batch_size} --workers 8 --ngpu 1 --gpu_id 1 \
     --print_freq 50 \
     --bfa \
