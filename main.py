@@ -279,22 +279,18 @@ def main():
                                download=True)
         num_classes = 10
     elif args.dataset == 'cifar10':
-        train_data = dset.CIFAR10(args.data_path,
-                                  train=True,
+        train_data = dset.CIFAR10(train=True,
                                   transform=train_transform,
                                   download=True)
-        test_data = dset.CIFAR10(args.data_path,
-                                 train=False,
+        test_data = dset.CIFAR10(train=False,
                                  transform=test_transform,
                                  download=True)
         num_classes = 10
     elif args.dataset == 'cifar100':
-        train_data = dset.CIFAR100(args.data_path,
-                                   train=True,
+        train_data = dset.CIFAR100(train=True,
                                    transform=train_transform,
                                    download=True)
-        test_data = dset.CIFAR100(args.data_path,
-                                  train=False,
+        test_data = dset.CIFAR100(train=False,
                                   transform=test_transform,
                                   download=True)
         num_classes = 100
