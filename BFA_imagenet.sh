@@ -24,6 +24,7 @@ enable_tb_display=false # enable tensorboard display
 model=resnet50_quan
 dataset=imagenet
 test_batch_size=256
+data_path = '/content/'
 
 attack_sample_size=64 # number of image samples used for BFA
 n_iter=50 # maximum allowed PBS iterations
