@@ -87,7 +87,7 @@ parser.add_argument('--print_freq',
                     help='print frequency (default: 200)')
 parser.add_argument('--save_path',
                     type=str,
-                    default='/content/',
+                    default='./save/',
                     help='Folder to save checkpoints and log.')
 parser.add_argument('--resume',
                     default='',

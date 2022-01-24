@@ -16,7 +16,7 @@ esac
 DATE=`date +%Y-%m-%d`
 
 if [ ! -d "$DIRECTORY" ]; then
-    mkdir ./"content"/${DATE}/
+    mkdir /"content"/${DATE}/
 fi
 
 ############### Configurations ########################
