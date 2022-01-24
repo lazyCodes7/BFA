@@ -38,8 +38,6 @@ parser.add_argument(
     type=str,
     choices=['cifar10', 'cifar100', 'imagenet', 'svhn', 'stl10', 'mnist'],
     help='Choose between Cifar10/100 and ImageNet.')
-
-# Optimization options
 parser.add_argument('--epochs',
                     type=int,
                     default=200,
