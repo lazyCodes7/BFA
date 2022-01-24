@@ -31,7 +31,7 @@ attack_sample_size=128 # number of data used for BFA
 n_iter=100 # number of iteration to perform BFA
 k_top=100 # only check k_top weights with top gradient ranking in each layer
 
-save_path=./save/${DATE}/${dataset}_${model}_${label_info}
+save_path=/"content"/${DATE}/${dataset}_${model}_${label_info}
 tb_path=${save_path}/tb_log  #tensorboard log path
 
 # set the pretrained model path

@@ -29,7 +29,7 @@ attack_sample_size=64 # number of image samples used for BFA
 n_iter=50 # maximum allowed PBS iterations
 k_top=10 # only check k_top weights with top gradient ranking in each layer
 
-save_path=./save/${DATE}/${dataset}_${model}_BFA
+save_path=/"content"/${DATE}/${dataset}_${model}_BFA
 tb_path=${save_path}/tb_log  #tensorboard log path
 
 ############### Neural network ############################
