@@ -24,7 +24,7 @@ enable_tb_display=false # enable tensorboard display
 model=resnet50_quan
 dataset=imagenet
 test_batch_size=256
-data_path = '/content/'
+data_path=/content/
 
 attack_sample_size=64 # number of image samples used for BFA
 n_iter=50 # maximum allowed PBS iterations
@@ -35,7 +35,7 @@ tb_path=${save_path}/tb_log  #tensorboard log path
 
 ############### Neural network ############################
 {
-$PYTHON main.py --dataset ${dataset} \
+python /content/BFA/main.py --dataset ${dataset} \
     --data_path ${data_path}   \
     --test_batch_size ${test_batch_size} --workers 8 --ngpu 1 --gpu_id 1 \
     --print_freq 50 \

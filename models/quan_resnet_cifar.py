@@ -8,9 +8,18 @@ import gdown
 from .quantization import *
 
 model_urls = {
-    'resnet50': 'https://github.com/iamsh4shank/BFA_ViT/blob/main/cifar-10_models/cifar_resnet50.pt',
+    'resnet50': 'https://github.com/lazyCodes7/Wine/blob/master/Wine/cifar_resnet50.pt',
 }
 
+def conv3x3(in_planes, out_planes, stride=1):
+    """3x3 convolution with padding"""
+    return quan_Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
+                     padding=1, bias=False)
+
+
+def conv1x1(in_planes, out_planes, stride=1):
+    """1x1 convolution"""
+    return quan_Conv2d(in_planes, out_planes, kernel_size=1, stride=stride, bias=False)
 
 class DownsampleA(nn.Module):
     def __init__(self, nIn, nOut, stride):
@@ -24,10 +33,13 @@ class DownsampleA(nn.Module):
 
 
 class ResNetBasicblock(nn.Module):
+    
+    """
+    RexNet basicblock (https://github.com/facebook/fb.resnet.torch/blob/master/models/resnet.lua)
+
+    """
+
     expansion = 1
-  """
-  RexNet basicblock (https://github.com/facebook/fb.resnet.torch/blob/master/models/resnet.lua)
-  """
     def __init__(self, inplanes, planes, stride=1, downsample=None):
         super(ResNetBasicblock, self).__init__()
 
@@ -64,6 +76,43 @@ class ResNetBasicblock(nn.Module):
 
         return F.relu(residual + basicblock, inplace=True)
 
+class Bottleneck(nn.Module):
+    expansion = 4
+
+    def __init__(self, inplanes, planes, stride=1, downsample=None):
+        super(Bottleneck, self).__init__()
+        # Both self.conv2 and self.downsample layers downsample the input when stride != 1
+        self.conv1 = conv1x1(inplanes, planes)
+        self.bn1 = nn.BatchNorm2d(planes)
+        self.conv2 = conv3x3(planes, planes, stride)
+        self.bn2 = nn.BatchNorm2d(planes)
+        self.conv3 = conv1x1(planes, planes * self.expansion)
+        self.bn3 = nn.BatchNorm2d(planes * self.expansion)
+        self.relu = nn.ReLU(inplace=True)
+        self.downsample = downsample
+        self.stride = stride
+
+    def forward(self, x):
+        identity = x
+
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+
+        out = self.conv2(out)
+        out = self.bn2(out)
+        out = self.relu(out)
+
+        out = self.conv3(out)
+        out = self.bn3(out)
+
+        if self.downsample is not None:
+            identity = self.downsample(x)
+
+        out += identity
+        out = self.relu(out)
+
+        return out
 
 class ResNet(nn.Module):
     def __init__(self,
@@ -141,6 +190,7 @@ class ResNet(nn.Module):
 
         return x
 
+        
 class CifarResNet50(nn.Module):
     def __init__(self, out_classes):
       super(CifarResNet50, self).__init__()
@@ -285,8 +335,10 @@ def resnet110_quan(num_classes=10):
 def resnet50_quan(num_classes=10, pretrained = True):
     model = CifarResNet50(num_classes)
 
-    if(pretrained):
-
-      model.load_state_dict(model_zoo.load_url(model_urls['resnet50'])
+    if pretrained:
+        model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
       
     return model
+
+
+    
