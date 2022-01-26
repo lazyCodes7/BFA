@@ -8,7 +8,7 @@ import gdown
 from .quantization import *
 
 model_urls = {
-    'resnet50': 'https://github.com/lazyCodes7/Wine/blob/master/Wine/cifar_resnet50.pt',
+    'resnet50': 'https://drive.google.com/uc?id=1Dz5KwcIrxwGOApu-1IaCZnoROZB5Gz33',
 }
 
 def conv3x3(in_planes, out_planes, stride=1):
@@ -336,7 +336,10 @@ def resnet50_quan(num_classes=10, pretrained = True):
     model = CifarResNet50(num_classes)
 
     if pretrained:
+        output = 'cifar_resnet50.pt'
+        gdown.download(model_urls['resnet50'], output, quiet=False)
         model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
+        model.load_state_dict(torch.load('./cifar_resnet50.pt'))
       
     return model
 
