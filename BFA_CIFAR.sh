@@ -21,7 +21,7 @@ fi
 
 ############### Configurations ########################
 enable_tb_display=false # enable tensorboard display
-model=resnet20_quan
+model=resnet50_quan
 dataset=cifar10
 data_path=/content/
 test_batch_size=128
@@ -35,7 +35,6 @@ save_path=/"content"/${DATE}/${dataset}_${model}_${label_info}
 tb_path=${save_path}/tb_log  #tensorboard log path
 
 # set the pretrained model path
-pretrained_model=https://github.com/iamsh4shank/BFA_ViT/blob/main/cifar-10_models/cifar_resnet50.pt
 
 ############### Neural network ############################
 {
@@ -44,7 +43,6 @@ pretrained_model=https://github.com/iamsh4shank/BFA_ViT/blob/main/cifar-10_model
         --arch ${model} --save_path ${save_path}  \
         --test_batch_size ${test_batch_size} --workers 8 --ngpu 1 --gpu_id 1 \
         --print_freq 50 \
-        --evaluate --resume ${pretrained_model} --fine_tune\
         --reset_weight --bfa --n_iter ${n_iter} \
         --attack_sample_size ${attack_sample_size} \
 

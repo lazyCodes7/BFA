@@ -22,6 +22,7 @@ import numpy as np
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith("__")
                      and callable(models.__dict__[name]))
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 ################# Options ##################################################
 ############################################################################
@@ -394,7 +395,7 @@ def main():
     if args.resume:
         if os.path.isfile(args.resume):
             print_log("=> loading checkpoint '{}'".format(args.resume), log)
-            checkpoint = torch.load(args.resume)
+            checkpoint = torch.load(args.resume, map_location = device)
             if not (args.fine_tune):
                 args.start_epoch = checkpoint['epoch']
                 recorder = checkpoint['recorder']
@@ -452,6 +453,7 @@ def main():
         return
 
     # Main loop
+    
     start_time = time.time()
     epoch_time = AverageMeter()
 
@@ -832,7 +834,7 @@ def accuracy(output, target, topk=(1, )):
         correct = pred.eq(target.view(1, -1).expand_as(pred))
         res = []
         for k in topk:
-            correct_k = correct[:k].view(-1).float().sum(0)
+            correct_k = correct[k-1].view(-1).float().sum(0)
             res.append(correct_k.mul_(100.0 / batch_size))
         return res
 
