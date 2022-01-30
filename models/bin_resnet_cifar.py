@@ -287,12 +287,11 @@ def resnet20_bin(num_classes=10):
     model = CifarResNet(ResNetBasicblock, 20, num_classes)
     return model
 
-def resnet50_bin(num_classes=10, pretrained = True):
+def resnet50_bin(num_classes=10, pretrained = False):
     model = CifarResNet50(num_classes)
     if pretrained:
         output = 'cifar_resnet50.pt'
         gdown.download(model_urls['resnet50'], output, quiet=False)
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
         model.load_state_dict(torch.load('./cifar_resnet50.pt'))
       
     return model

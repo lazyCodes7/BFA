@@ -45,6 +45,7 @@ tb_path=${save_path}/tb_log  #tensorboard log path
         --print_freq 50 \
         --reset_weight --bfa --n_iter ${n_iter} \
         --attack_sample_size ${attack_sample_size} \
+        --k_top ${k_top}
 
 } &
 ############## Tensorboard logging ##########################

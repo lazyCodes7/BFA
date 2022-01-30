@@ -16,26 +16,26 @@ esac
 DATE=`date +%Y-%m-%d`
 
 if [ ! -d "$DIRECTORY" ]; then
-    mkdir ./save/${DATE}/
+    mkdir /content/${DATE}/
 fi
 
 ############### Configurations ########################
 enable_tb_display=false # enable tensorboard display
-model=resnet20_quan
+model=resnet50_quan
 dataset=cifar10
-epochs=160
+epochs=50
 train_batch_size=128
 test_batch_size=128
 optimizer=SGD
 
 label_info=binarized
 
-save_path=./save/${DATE}/${dataset}_${model}_${epochs}_${optimizer}_${label_info}
+save_path=/content/${DATE}/${dataset}_${model}_${epochs}_${optimizer}_${label_info}
 tb_path=${save_path}/tb_log  #tensorboard log path
-
+data_path=/content/
 ############### Neural network ############################
 {
-$PYTHON main.py --dataset ${dataset} \
+ python /content/BFA/main.py --dataset ${dataset} \
     --data_path ${data_path}   \
     --arch ${model} --save_path ${save_path} \
     --epochs ${epochs} --learning_rate 0.1 \
