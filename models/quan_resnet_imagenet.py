@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 from .quantization import *
-
+from transformers import ViTFeatureExtractor, ViTForImageClassification
 __all__ = [
     'ResNet', 'resnet18_quan', 'resnet34_quan', 'resnet50', 'resnet101',
     'resnet152'
@@ -182,7 +182,13 @@ class ResNet(nn.Module):
         x = self.fc(x)
 
         return x
-
+  
+class ViTClassifier(nn.Module):
+    def __init__(self):
+      super(ViTClassifier, self).__init__()
+      self.model = ViTForImageClassification.from_pretrained('google/vit-base-patch16-224')
+    def forward(self, image):
+      return self.model(image).logits
 
 def resnet18_quan(pretrained=True, **kwargs):
     """Constructs a ResNet-18 model.
@@ -274,3 +280,7 @@ def resnet152(pretrained=False, **kwargs):
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['resnet152']))
     return model
+
+def vit_image_classification(num_classes = None, **kwargs):
+  model = ViTClassifier()
+  return model
