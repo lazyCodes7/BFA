@@ -423,7 +423,6 @@ def main():
     if args.quan_bitwidth is not None:
         change_quan_bitwidth(net, args.quan_bitwidth)
 
-    '''
     # update the step_size once the model is loaded. This is used for quantization.
     for m in net.modules():
         if isinstance(m, quan_Conv2d) or isinstance(m, quan_Linear):
@@ -437,7 +436,6 @@ def main():
             if isinstance(m, quan_Conv2d) or isinstance(m, quan_Linear):
                 m.__reset_weight__()
                 # print(m.weight)
-    '''
 
     attacker = BFA(criterion, net, args.k_top)
     net_clean = copy.deepcopy(net)
