@@ -4,7 +4,7 @@ from models.quantization import quan_Conv2d, quan_Linear, quantize
 import operator
 from torch.nn import Conv2d, Linear
 from attack.data_conversion import *
-
+import torch.nn as nn
 # Setting up the device to use 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -44,14 +44,14 @@ class BFA(object):
         '''
         # replace the weight with the quantized version
         with torch.no_grad():
-            module.weight.data = quantize(model.weight, self.step_size,
+            module.weight.data = quantize(module.weight, self.step_size,
                                         self.half_lvls)
         # enable the flag, thus now computation does not invovle weight quantization
         self.inf_with_weight = True
 
-    def __reset_stepsize__(self):
+    def __reset_stepsize__(self, module):
         with torch.no_grad():
-            self.step_size.data = self.weight.abs().max() / self.half_lvls
+            self.step_size.data = module.weight.abs().max() / self.half_lvls
 
     def flip_bit(self, m):
         '''
@@ -141,8 +141,8 @@ class BFA(object):
         #         _, target = output.data.max(1)
         self.loss = self.criterion(output, target)
         for m in model.modules():
-            if(isinstance(m, nn.Conv2d), isinstance(m, nn.Linear)):
-                self.__reset_stepsize__()
+            if(isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear)):
+                self.__reset_stepsize__(m)
             if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
                 self.__reset_weight__(m)
         # 2. zero out the grads first, then get the grads
@@ -173,7 +173,7 @@ class BFA(object):
                     # change the weight to attacked weight and get loss
                     module.weight.data = attack_weight
                     output = model(data)
-                    print (output)
+                    #print (output)
                     self.loss_dict[name] = self.criterion(output,
                                                           target).item()
                     # change the weight back to the clean weight
