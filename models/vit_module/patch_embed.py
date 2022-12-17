@@ -10,8 +10,9 @@ from torch import nn as nn
 
 from .helpers import to_2tuple
 from .trace_utils import _assert
-
-from .quantization import *
+import sys
+sys.path.insert(1, '../')
+from models.quantization import *
 class PatchEmbed(nn.Module):
     """ 2D Image to Patch Embedding
     """

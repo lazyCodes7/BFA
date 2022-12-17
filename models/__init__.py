@@ -3,6 +3,7 @@ from .vanilla_models.vanilla_resnet_imagenet import resnet18
 from .quan_resnet_imagenet import resnet18_quan, resnet34_quan, vit_image_classification
 from .quan_alexnet_imagenet import alexnet_quan
 from .quan_resnet50_imagenet import resnet50
+from .vit_module.vision_transformer import vit_base_patch16_224
 ############## ResNet for CIFAR-10 ###########
 from .vanilla_models.vanilla_resnet_cifar import vanilla_resnet20
 from .quan_resnet_cifar import resnet20_quan

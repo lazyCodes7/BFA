@@ -140,19 +140,19 @@ class BFA(object):
         output = model(data)
         #         _, target = output.data.max(1)
         self.loss = self.criterion(output, target)
+        '''
         for m in model.modules():
             if(isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear)):
                 self.__reset_stepsize__(m)
             if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
                 self.__reset_weight__(m)
+        '''
         # 2. zero out the grads first, then get the grads
         for m in model.modules():
             if isinstance(m, quan_Conv2d) or isinstance(m, quan_Linear):
                 if m.weight.grad is not None:
                     m.weight.grad.data.zero_()
-            if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
-                if m.weight.grad is not None:
-                    m.weight.grad.data.zero_()
+
                 
 
         self.loss.backward()

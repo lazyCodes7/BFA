@@ -5,8 +5,9 @@ Hacked together by / Copyright 2020 Ross Wightman
 from torch import nn as nn
 
 from .helpers import to_2tuple
-
-from .quantization import *
+import sys
+sys.path.insert(1, '../')
+from models.quantization import *
 class Mlp(nn.Module):
     """ MLP as used in Vision Transformer, MLP-Mixer and related networks
     """
